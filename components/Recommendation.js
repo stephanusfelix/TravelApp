@@ -1,67 +1,122 @@
 /* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
 import {
+  Alert,
+  ImageBackground,
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
   useColorScheme,
+  TouchableOpacity,
   TextInput,
   View,
   Button,
-  Alert,
 } from 'react-native';
 
 const Recommendation = (): Node => {
   const [data, setData] = React.useState('');
   const [loading, setLoading] = React.useState(true);
-  const photos = ["https://exp.cdn-hotels.com/hotels/10000000/9240000/9236500/9236409/af86011f_z.jpg"]
-  const name = ["London"]
-  const ids = [1696059]
-  React.useEffect(() => {
-    fetch(
-      'https://hotels-com-provider.p.rapidapi.com/v1/destinations/search?query=London&currency=USD&locale=en_US',
+  const photos = [
+    'https://exp.cdn-hotels.com/hotels/10000000/9240000/9236500/9236409/af86011f_z.jpg',
+    'https://exp.cdn-hotels.com/hotels/10000000/9240000/9236500/9236409/af86011f_z.jpg',
+    'https://exp.cdn-hotels.com/hotels/10000000/9240000/9236500/9236409/af86011f_z.jpg',
+    'https://exp.cdn-hotels.com/hotels/10000000/9240000/9236500/9236409/af86011f_z.jpg',
+  ];
+  const name = ['London', 'London', 'London', 'London'];
+  const ids = [1696059, 1696059, 1696059, 1696059];
+  const handleClickDestination = id => {
+    Alert.alert('Alert Title', 'ID : ' + id, [
       {
-        method: 'GET',
-        headers: {
-          'x-rapidapi-host': 'hotels-com-provider.p.rapidapi.com',
-          'x-rapidapi-key':
-            'b3aa55d102msh22713dd03ca7fcfp12bdd3jsn5f81b3ac3ec7',
-        },
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
       },
-    )
-      .then(response => response.json())
-      .then(json => setData(json))
-      .catch(error => console.error(error))
-      .finally(() => setLoading(false));
-  }, []);
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ]);
+  };
+
   return (
     <ScrollView>
       <SafeAreaView>
         <View>
-          <Text>Top Destination</Text>
+          <Text style={styles.title}>Top Destination</Text>
         </View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <View style={styles.circleParent}>
-          <View style={styles.circle} />
-          <View style={styles.circle} />
-          <View style={styles.circle} />
-          <View style={styles.circle} />
+          <View style={styles.squareParent}>
+            {ids.map((id, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.square}
+                onPress={() => handleClickDestination(id)}>
+                <ImageBackground
+                  source={{uri: photos[index]}}
+                  resizeMode="cover"
+                  style={styles.image}
+                  imageStyle={{borderRadius: 20}}>
+                  <View style={styles.image}>
+                    <Text style={styles.text}>{name[index]}</Text>
+                  </View>
+                </ImageBackground>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ScrollView>
+        <View>
+          <Text style={styles.title}>Popular Destination</Text>
         </View>
-      </ScrollView>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View style={styles.squareParent}>
+            {ids.map((id, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.square}
+                onPress={() => handleClickDestination(id)}>
+                <ImageBackground
+                  source={{uri: photos[index]}}
+                  resizeMode="cover"
+                  style={styles.image}
+                  imageStyle={{borderRadius: 20}}>
+                  <View style={styles.image}>
+                    <Text style={styles.text}>{name[index]}</Text>
+                  </View>
+                </ImageBackground>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  circle: {
+  title: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    margin: 20,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: 20,
+    textAlign: 'bottom',
+  },
+  text: {
+    position: 'absolute',
+    color: 'white',
+    bottom: 12,
+    left: 10,
+    fontWeight: 'bold',
+  },
+  square: {
     backgroundColor: 'grey',
     width: 100,
     height: 100,
+    borderRadius: 20,
   },
-  circleParent: {
+  squareParent: {
     flexDirection: 'row',
     height: 150,
     width: 500,
