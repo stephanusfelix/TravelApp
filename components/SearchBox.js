@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
-const SearchBox = (): Node => {
+export default function SearchBox({navigation}) {
   const [destination, onChangeDestionation] = React.useState('');
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
@@ -109,7 +109,7 @@ const SearchBox = (): Node => {
       </SafeAreaView>
     </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   input: {
@@ -151,4 +151,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-export default SearchBox;

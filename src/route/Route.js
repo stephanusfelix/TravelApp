@@ -5,15 +5,12 @@ import {
 } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BottomTab from '../component/BottomTab';
-// import SplashScreen from '../SplashScreen';
-// import Login from '../Screens/Auth/Login';
-// import Register from '../Screens/Auth/Register';
-// import SearchResult from '../Screens/SearchResult';
-// import DetailHotel from '../Screens/DetailHotel';
-
-// import EditProfile from '../Screens/Profile/EditProfile';
+import Login from '../screens/Login';
+import Result from '../screens/Result';
+import DetailHotel from '../screens/Detail';
+import ProfileEdit from '../screens/ProfileEdit';
+import Booking from '../screens/Booking';
 // import {checkExpireToken} from '../Utils/GlobalFunc';
-// import Booking from '../Screens/Booking';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,13 +29,6 @@ export default function Routes() {
             headerShown: false,
           })}
         />
-        {/* <Stack.Screen
-          name="SplashScreen"
-          component={SplashScreen}
-          options={({navigation, route}) => ({
-            headerShown: false,
-          })}
-        />
         <Stack.Screen
           name="Login"
           component={Login}
@@ -47,14 +37,7 @@ export default function Routes() {
           })}
         />
         <Stack.Screen
-          name="Register"
-          component={Register}
-          options={({navigation, route}) => ({
-            headerShown: false,
-          })}
-        />
-        <Stack.Screen
-          name="DetailHotel"
+          name="Detail"
           component={DetailHotel}
           options={({navigation, route}) => ({
             headerShown: true,
@@ -65,7 +48,7 @@ export default function Routes() {
         />
         <Stack.Screen
           name="SearchResult"
-          component={SearchResult}
+          component={Result}
           options={({navigation, route}) => ({
             headerShown: true,
             headerTransparent: true,
@@ -75,7 +58,7 @@ export default function Routes() {
         />
         <Stack.Screen
           name="EditProfile"
-          component={EditProfile}
+          component={ProfileEdit}
           options={({navigation, route}) => ({
             headerShown: true,
             headerShadowVisible: false,
@@ -91,7 +74,7 @@ export default function Routes() {
             headerShadowVisible: false,
             headerTitle: '',
           })}
-        /> */}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

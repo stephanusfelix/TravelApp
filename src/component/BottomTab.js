@@ -2,10 +2,11 @@ import React, {Component, useEffect, useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Search from '../screens/Search';
+import Home from '../screens/Home';
 import Wishlist from '../screens/Wishlist';
 import Profile from '../screens/Profile';
 import Setting from '../screens/Setting';
-import App from '../../App';
+import Detail from '../screens/Detail';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,19 +19,8 @@ export default function BottomTab() {
         tabBarActiveTintColor: 'green',
       }}>
       <Tab.Screen
-        name="Home"
-        component={App}
-        options={({navigation, route}) => ({
-          title: 'Home',
-          headerShown: false,
-          tabBarIcon: ({focused, color}) => (
-            <Icon name="home" color={'blue'} size={20} />
-          ),
-        })}
-      />
-      <Tab.Screen
         name="Search"
-        component={Search}
+        component={Home}
         options={({navigation, route}) => ({
           title: 'Search',
           headerShown: false,
