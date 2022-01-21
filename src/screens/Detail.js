@@ -106,16 +106,16 @@ export default class Detail extends Component {
         </ImageBackground>
         <View style={styles.detailsContainer}>
           <View style={styles.iconContainer}>
-            <Icon name="favorite" color={'#7267CB'} size={30} />
+            <Icon name="favorite" color={'blue'} size={30} />
           </View>
           <View style={{flexDirection: 'row', marginTop: 10}}>
-            <Icon name="place" size={28} color={'#6E3CBC'} />
+            <Icon name="place" size={28} color={'blue'} />
             <Text
               style={{
                 marginLeft: 5,
                 fontSize: 20,
                 fontWeight: 'bold',
-                color: '#6E3CBC',
+                color: 'blue',
               }}>
               {/* {place.location} */}
               Jakarta
@@ -123,14 +123,14 @@ export default class Detail extends Component {
           </View>
           <Text
             style={{
-              color: '#6E3CBC',
+              color: 'blue',
               marginTop: 20,
               fontWeight: 'bold',
               fontSize: 20,
             }}>
             About
           </Text>
-          <Text style={{color: '#6E3CBC', marginTop: 20, lineHeight: 22}}>
+          <Text style={{color: 'blue', marginTop: 20, lineHeight: 22}}>
             {/* {place.details} */}
             gJl. lorem t is a secondary color and the result of mixing red and
             yellow in equal portions. There are many variations of orange
@@ -158,7 +158,7 @@ export default class Detail extends Component {
             </Text>
           </View>
           <View style={styles.bookNowBtn}>
-            <Text style={{color: '#7267CB', fontSize: 16, fontWeight: 'bold'}}>
+            <Text style={{color: 'blue', fontSize: 16, fontWeight: 'bold'}}>
               Book Now
             </Text>
           </View>
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     flexDirection: 'row',
-    backgroundColor: '#7267CB',
+    backgroundColor: 'blue',
     height: 70,
     justifyContent: 'space-between',
     alignItems: 'center',
