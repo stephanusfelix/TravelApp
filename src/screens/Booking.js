@@ -1,17 +1,53 @@
 import React, {Component, useState, useEffect} from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import {SafeAreaView, Text, View, TouchableOpacity} from 'react-native';
 
-export default function Booking({navigation, route}) {
+export default function Setting({navigation, route}) {
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={[{flex: 1, backgroundColor: '#f4f4f4', padding: 20}, {}]}>
+      <View
+        style={[
+          {
+            flex: 1,
+            backgroundColor: '#f4f4f4',
+            padding: 20,
+            alignItems: 'center',
+            alignContent: 'center',
+            justifyContent: 'center',
+          },
+          {},
+        ]}>
         <Text
           style={[
-            {fontSize: 14, color: '#1D1D1D'},
-            {fontSize: 30, fontWeight: 'bold', marginBottom: 30},
+            {fontSize: 14, color: 'blue'},
+            {fontSize: 30, fontWeight: 'bold', marginTop: 40},
           ]}>
-          Booking
+          Booking Berhasil
         </Text>
+      </View>
+      <View
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          flex: 1,
+        }}>
+        <TouchableOpacity
+          style={[
+            {
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+          ]}
+          onPress={() => navigation.navigate('BottomTab')}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              color: 'white',
+              backgroundColor: 'blue',
+              fontSize: 16,
+            }}>
+            Kembali
+          </Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

@@ -34,7 +34,6 @@ export default function Home({navigation, route}) {
       let params = {query: 'Indonesia', locale: 'in_ID', currency: 'IDR'};
       let res = await getRequest('locations/v2/search', params);
       if (res) {
-        // console.log('masuk')
         await AsyncStorage.setItem(
           'kota',
           JSON.stringify(res.data.suggestions[0].entities),
@@ -42,7 +41,6 @@ export default function Home({navigation, route}) {
         setKota(res.data.suggestions[0].entities);
       }
     } else {
-      // console.log('sini',)
       setKota(JSON.parse(k));
     }
   }
@@ -66,7 +64,7 @@ export default function Home({navigation, route}) {
         locale: 'en_US',
         currency: 'IDR',
       };
-      navigation.navigate('Detail', {parameter: params});
+      navigation.navigate('Result', {parameter: params});
     }
   }
 
@@ -75,27 +73,26 @@ export default function Home({navigation, route}) {
   }, []);
   return (
     <SafeAreaView style={{flex: 1}}>
-      <StatusBar translucent backgroundColor="rgba(0,0,0,0)" />
+      <StatusBar translucent backgroundColor="rgb(189, 195, 199) " />
 
       <View style={[{flex: 1, backgroundColor: 'white', padding: 20}, {}]}>
         <Text
           style={[
             {
-              fontSize: 14,
               color: 'blue',
             },
-            {fontSize: 20, fontWeight: 'bold', marginBottom: 30},
+            {fontSize: 25, fontWeight: 'bold', marginTop: 20},
           ]}>
           Home Search
         </Text>
-        <View style={[{paddingVertical: 5}]}>
+        <View style={[{paddingVertical: 5, marginTop: 100}]}>
           <DropDownPicker
             style={{borderWidth: 0, borderRadius: 5}}
-            placeholder="Where do you want to go?"
+            placeholder="Pilih Destinasi Hotel yang Ingin Dituju"
             placeholderStyle={{color: 'blue'}}
             schema={{
-              label: 'name', // required
-              value: 'destinationId', // required
+              label: 'name',
+              value: 'destinationId',
               testID: 'destinationId',
             }}
             open={open}
@@ -247,7 +244,9 @@ export default function Home({navigation, route}) {
               alignItems: 'center',
             },
           ]}
-          onPress={() => clickSearch(dateStart, dateEnd)}>
+          onPress={() =>
+            clickSearch(destinationId, dateStart, dateEnd, guest, pageNumber)
+          }>
           <Text style={{fontWeight: 'bold', color: 'blue', fontSize: 16}}>
             Search
           </Text>

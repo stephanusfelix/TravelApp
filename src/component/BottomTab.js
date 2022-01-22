@@ -3,7 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Search from '../screens/Search';
 import Home from '../screens/Home';
-import Wishlist from '../screens/Wishlist';
+import Favorite from '../screens/Favorite';
 import Profile from '../screens/Profile';
 import Setting from '../screens/Setting';
 import Detail from '../screens/Detail';
@@ -31,7 +31,7 @@ export default function BottomTab() {
       />
       <Tab.Screen
         name="Favorite"
-        component={Wishlist}
+        component={Favorite}
         options={({navigation, route}) => ({
           title: 'Favorite',
           headerShown: false,

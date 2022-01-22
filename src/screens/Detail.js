@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, {Component, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -9,163 +10,156 @@ import {
   SafeAreaView,
   Image,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import Axios from 'axios';
+import {getRequest} from '../consts/Function';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default class Detail extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: {},
-      isLoading: true,
-      isError: false,
-    };
+export default function DetailHotel({navigation, route}) {
+  const params = route.params.parameter;
+  const image = route.params.image;
+  const [detail, setDetail] = useState(null);
+  const [transportation, setTransportation] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function getDetails() {
+    setIsLoading(true);
+    let res = await getRequest('properties/get-details', params);
+    if (res) {
+      setDetail(res.data.data.body);
+      setTransportation(res.data.transportation);
+      await AsyncStorage.setItem('detail', JSON.stringify(res.data));
+      setIsLoading(false);
+    }
+    setIsLoading(false);
   }
 
-  // Mount User Method
-  componentDidMount() {
-    this.getGithubUser();
-  }
+  useEffect(() => {
+    getDetails();
+  }, []);
 
-  //   Get Api Users
-  getGithubUser = async () => {
-    const options = {
-      params: {hotel_id: '363464'},
-      headers: {
-        'x-rapidapi-host': 'hotels-com-provider.p.rapidapi.com',
-        'x-rapidapi-key': 'e5a0fd5369msh28971ed033b9ea0p164c58jsncb26f5f17ba9',
-      },
-    };
-
-    try {
-      const response = await Axios.get(
-        'https://hotels-com-provider.p.rapidapi.com/v1/hotels/photos',
-        options,
-      );
-      this.setState({isError: false, isLoading: false, data: response.data});
-    } catch (error) {
-      this.setState({isLoading: false, isError: true});
-    }
-  };
-
-  render() {
-    //  If load data
-    if (this.state.isLoading) {
-      return (
-        <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-          <ActivityIndicator size="large" color="red" />
-        </View>
-      );
-    }
-    // If data not fetch
-    else if (this.state.isError) {
-      return (
-        <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-          <Text>Terjadi Error Saat Memuat Data</Text>
-        </View>
-      );
-    }
-    // If data finish load
+  if (isLoading) {
     return (
-      <SafeAreaView style={{flex: 1, backgroundColor: '#FFFFFF'}}>
-        <StatusBar translucent backgroundColor="rgba(0,0,0,0)" />
-        <ImageBackground
-          style={styles.ImageBg}
-          source={{
-            uri: `https://exp.cdn-hotels.com/hotels/4000000/3860000/3851700/3851675/66f33f75_z.jpg`,
-          }}>
-          <View style={styles.header}>
-            <Icon
-              name="arrow-back"
-              size={28}
-              color={'white'}
-              //   onPress={navigation.goBack}
-            />
-            <Icon name="more-vert" size={28} color={'white'} />
-          </View>
-          <View style={styles.imageDetails}>
-            <Text
-              style={{
-                width: '70%',
-                fontSize: 30,
-                fontWeight: 'bold',
-                color: 'white',
-                marginBottom: 20,
-              }}>
-              {/* {place.name} */}
-              Nama Tempat
-            </Text>
-            <View style={{flexDirection: 'row'}}>
-              <Icon name="star" size={30} color={'#FFBF00'} />
-              <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
-                5.0
-              </Text>
-            </View>
-          </View>
-        </ImageBackground>
-        <View style={styles.detailsContainer}>
-          <View style={styles.iconContainer}>
-            <Icon name="favorite" color={'blue'} size={30} />
-          </View>
-          <View style={{flexDirection: 'row', marginTop: 10}}>
-            <Icon name="place" size={28} color={'blue'} />
-            <Text
-              style={{
-                marginLeft: 5,
-                fontSize: 20,
-                fontWeight: 'bold',
-                color: 'blue',
-              }}>
-              {/* {place.location} */}
-              Jakarta
-            </Text>
-          </View>
+      <View
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          flex: 1,
+        }}>
+        <ActivityIndicator size="large" color="red" />
+        <Text style={{color: 'blue'}}>
+          Sedang meload data..... Tunggu beberapa saat
+        </Text>
+      </View>
+    );
+  }
+  // If data finish load
+  return (
+    <SafeAreaView style={{flex: 1, backgroundColor: '#FFFFFF'}}>
+      <StatusBar translucent backgroundColor="rgb(189, 195, 199) " />
+      <ImageBackground
+        style={styles.ImageBg}
+        source={{
+          uri: image,
+        }}>
+        <View style={styles.header}></View>
+        <View style={styles.imageDetails}>
+          <Text
+            style={{
+              width: '100%',
+              fontSize: 20,
+              fontWeight: 'bold',
+              color: 'white',
+              marginBottom: 20,
+            }}>
+            {/* {place.name} */}
+            {detail?.propertyDescription.name}
+          </Text>
+        </View>
+      </ImageBackground>
+      <View style={styles.detailsContainer}>
+        <View style={styles.iconContainer}>
+          <Icon name="favorite" color={'blue'} size={30} />
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          <Icon name="star" size={20} color={'#FFBF00'} />
           <Text
             style={{
               color: 'blue',
-              marginTop: 20,
               fontWeight: 'bold',
-              fontSize: 20,
+              fontSize: 15,
+              marginLeft: 5,
             }}>
-            About
-          </Text>
-          <Text style={{color: 'blue', marginTop: 20, lineHeight: 22}}>
-            {/* {place.details} */}
-            gJl. lorem t is a secondary color and the result of mixing red and
-            yellow in equal portions. There are many variations of orange
-            depending on the proportions of the two
+            {detail?.propertyDescription.starRatingTitle}
           </Text>
         </View>
-        <View style={styles.footer}>
-          <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: 'bold',
-                color: 'white',
-              }}>
-              $100
-            </Text>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: 'bold',
-                color: 'yellow',
-                marginLeft: 2,
-              }}>
-              /PER DAY
-            </Text>
-          </View>
-          <View style={styles.bookNowBtn}>
-            <Text style={{color: 'blue', fontSize: 16, fontWeight: 'bold'}}>
-              Book Now
-            </Text>
-          </View>
+        <View style={{flexDirection: 'row', marginTop: 10}}>
+          <Icon name="place" size={20} color={'red'} />
+          <Text
+            style={{
+              marginLeft: 5,
+              fontSize: 12,
+              fontWeight: 'bold',
+              color: 'blue',
+            }}>
+            {detail?.propertyDescription.address.fullAddress}
+          </Text>
         </View>
-      </SafeAreaView>
-    );
-  }
+        <Text
+          style={{
+            color: 'blue',
+            marginTop: 20,
+            fontWeight: 'bold',
+            fontSize: 20,
+          }}>
+          About
+        </Text>
+        <Text style={{color: 'blue', marginTop: 20, lineHeight: 22}}>
+          {detail?.propertyDescription.tagline}
+        </Text>
+      </View>
+      <View style={styles.footer}>
+        <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: 'bold',
+              color: 'white',
+            }}>
+            {detail?.propertyDescription.featuredPrice?.currentPrice.formatted}
+          </Text>
+          <Text
+            style={{
+              fontSize: 12,
+              fontWeight: 'bold',
+              color: 'yellow',
+              marginLeft: 2,
+            }}>
+            /PER DAY
+          </Text>
+        </View>
+        {/* <View >
+          <Text style={{color: 'blue', fontSize: 16, fontWeight: 'bold'}}>
+            Book Now
+          </Text>
+        </View> */}
+        <TouchableOpacity
+          style={styles.bookNowBtn}
+          onPress={() =>
+            navigation.navigate('Booking', {
+              parameter: params,
+              detail,
+              result: route.params.item,
+            })
+          }>
+          <Text style={{fontWeight: 'bold', color: 'blue', fontSize: 16}}>
+            Book Now
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
