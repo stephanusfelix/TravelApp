@@ -8,7 +8,6 @@ import BottomTab from '../component/BottomTab';
 import Login from '../screens/Login';
 import Result from '../screens/Result';
 import DetailHotel from '../screens/Detail';
-import ProfileEdit from '../screens/ProfileEdit';
 import Booking from '../screens/Booking';
 // import {checkExpireToken} from '../Utils/GlobalFunc';
 
@@ -47,7 +46,7 @@ export default function Routes() {
           })}
         />
         <Stack.Screen
-          name="SearchResult"
+          name="Result"
           component={Result}
           options={({navigation, route}) => ({
             headerShown: true,
@@ -56,15 +55,7 @@ export default function Routes() {
             title: '',
           })}
         />
-        <Stack.Screen
-          name="EditProfile"
-          component={ProfileEdit}
-          options={({navigation, route}) => ({
-            headerShown: true,
-            headerShadowVisible: false,
-            headerTitle: '',
-          })}
-        />
+
         <Stack.Screen
           name="Booking"
           component={Booking}

@@ -1,5 +1,5 @@
 import React, {Component, useState, useEffect} from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import {SafeAreaView, Text, View, ActivityIndicator} from 'react-native';
 
 export default function Setting({navigation, route}) {
   return (
@@ -7,11 +7,32 @@ export default function Setting({navigation, route}) {
       <View style={[{flex: 1, backgroundColor: '#f4f4f4', padding: 20}, {}]}>
         <Text
           style={[
-            {fontSize: 14, color: '#1D1D1D'},
-            {fontSize: 30, fontWeight: 'bold', marginBottom: 30},
+            {
+              color: 'blue',
+            },
+            {fontSize: 25, fontWeight: 'bold', marginTop: 20},
           ]}>
           Setting
         </Text>
+        <View
+          style={[
+            {
+              flex: 1,
+              backgroundColor: '#f4f4f4',
+              padding: 20,
+              alignItems: 'center',
+              alignContent: 'center',
+              justifyContent: 'center',
+            },
+            {},
+          ]}>
+          <Text
+            style={[
+              {fontSize: 14, color: 'blue'},
+              {fontSize: 20, fontWeight: 'bold', marginTop: 40},
+            ]}></Text>
+          <ActivityIndicator size="large" color="red" />
+        </View>
       </View>
     </SafeAreaView>
   );
